@@ -1,0 +1,13 @@
+module
+fastapi
+psycopg2-binary
+pydantic
+SQLAlchemy
+typing
+uvicorn[standard]
+uuid
+DateTime
+passlib
+databases
+asyncpg
+starlette
