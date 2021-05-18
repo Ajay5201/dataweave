@@ -29,9 +29,7 @@ async def startup():
 async def shutdown():
     await database.disconnect()
 
-@app.get("/")
-def read_root():
-    return {"Hola": "Mundo"}
+
 
 
 @app.get("/Products")
@@ -53,19 +51,19 @@ async def register_user(search:md.Search):
 
 @app.post("/UpdateProduct",response_model=md.ViewUpdateProduct,tags=["Users"])
 async def register_user(UpdateProduct:md.UpdateProduct):
-    query = products.update().where(products.c.urlh == UpdateProduct.urlh).values(
+    query = products.update().where(products.c.title == UpdateProduct.title).values(
         brand=UpdateProduct.brand,
         category=UpdateProduct.category,
         subcategory=UpdateProduct.subcategory,
         product_type=UpdateProduct.product_type,
     )
     await database.execute(query)
-    return await find_product_by_id(UpdateProduct.urlh)
+    return await find_product_by_id(UpdateProduct.title)
 
 
-@app.get("/Products/{urlh}", response_model=md.ViewUpdateProduct, tags=["Users"])
-async def find_product_by_id(urlh: str):
-    query = products.select().where(products.c.urlh == urlh)
+@app.get("/Products/{title}", response_model=md.ViewUpdateProduct, tags=["Users"])
+async def find_product_by_id(title: str):
+    query = products.select().where(products.c.title == title)
     return await database.fetch_one(query)
 
 @app.get("/Products/brand/{brand}")
