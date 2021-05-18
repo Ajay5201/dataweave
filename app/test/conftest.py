@@ -32,5 +32,5 @@ def client() -> Generator:
     with TestClient(app) as c:
         yield c
 def test_create_user(client: TestClient):
-    response = client.get("/ProductDiscounts")
+    response = client.get("/Products")
     assert response.status_code == 200
